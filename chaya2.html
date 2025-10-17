@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaya B R | Portfolio</title>
+
+  <!-- ====== Google Fonts ====== -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Poppins", sans-serif;
+    }
+
+    body {
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* ===== Background Canvas ===== */
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      background: radial-gradient(circle at top left, #050b1a, #000);
+    }
+
+    /* ===== Main Container ===== */
+    .container {
+      width: 85%;
+      margin: auto;
+      padding: 50px 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    header h1 {
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, #00d9ff, #007bff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    header p {
+      color: #cfd8dc;
+      font-size: 1.1rem;
+    }
+
+    section {
+      margin-top: 40px;
+      background: rgba(255, 255, 255, 0.05);
+      padding: 20px 30px;
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s;
+    }
+
+    section:hover {
+      transform: scale(1.02);
+    }
+
+    h2 {
+      color: #00eaff;
+      border-bottom: 2px solid #00eaff;
+      display: inline-block;
+      margin-bottom: 15px;
+    }
+
+    ul {
+      margin-left: 20px;
+      list-style-type: square;
+    }
+
+    a {
+      text-decoration: none;
+      font-weight: 600;
+      background: linear-gradient(90deg, #00eaff, #00ff9d);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      transform: scale(1.1);
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #bbb;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Particle Background -->
+  <div id="particles-js"></div>
+
+  <div class="container">
+    <header>
+      <h1>Chaya B R</h1>
+      <p>Java Full Stack Developer | Web Developer | Coder</p>
+      <p>
+        <a href="mailto:chayabr62@gmail.com">chayabr62@gmail.com</a> |
+        <a href="tel:+917411076534">+91 7411076534</a>
+      </p>
+    </header>
+
+    <section>
+      <h2>Career Objective</h2>
+      <p>
+        Motivated and fast-learning software engineer with strong foundation in Java, web development,
+        and database technologies. Completed a Java Full Stack internship and developed real-world projects.
+      </p>
+    </section>
+
+    <section>
+      <h2>Technical Skills</h2>
+      <ul>
+        <li>Java, OOPs, Collections, Multithreading</li>
+        <li>HTML, CSS, JavaScript, Spring Boot, JSON</li>
+        <li>MySQL, SQL Queries (DDL, DML)</li>
+        <li>Git, Eclipse, VS Code, Postman</li>
+        <li>REST APIs, MVC Architecture</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      <ul>
+        <li>
+          <strong>Multi-Module Web Application</strong> — Java, Spring Boot, Hibernate, MySQL  
+          <br>
+          GitHub: 
+          <a href="https://github.com/chayabr/Spring-Boot-project-on-product-module">Project 1</a> |
+          <a href="https://github.com/chayabr/JEE-project">Project 2</a> |
+          <a href="https://github.com/chayabr/simple-java-maven-app">Project 3</a>
+        </li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Certifications</h2>
+      <ul>
+        <li>Certified Intern at Palle Technologies Pvt. Ltd</li>
+        <li>Java Programming Certificate – Great Learning</li>
+        <li>Coordinator for DigitISE</li>
+      </ul>
+    </section>
+
+    <footer>
+      &copy; 2025 Chaya B R | All Rights Reserved
+    </footer>
+  </div>
+
+  <!-- ====== Particles.js Script ====== -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    particlesJS("particles-js", {
+      "particles": {
+        "number": { "value": 80 },
+        "color": { "value": "#00eaff" },
+        "shape": { "type": "circle" },
+        "opacity": { "value": 0.6 },
+        "size": { "value": 3 },
+        "line_linked": {
+          "enable": true,
+          "distance": 150,
+          "color": "#00eaff",
+          "opacity": 0.4,
+          "width": 1
+        },
+        "move": {
+          "enable": true,
+          "speed": 3,
+          "direction": "none",
+          "random": false,
+          "straight": false,
+          "out_mode": "out"
+        }
+      },
+      "interactivity": {
+        "events": {
+          "onhover": { "enable": true, "mode": "grab" },
+          "onclick": { "enable": true, "mode": "push" }
+        },
+        "modes": {
+          "grab": { "distance": 200, "line_linked": { "opacity": 0.8 } }
+        }
+      },
+      "retina_detect": true
+    });
+  </script>
+
+</body>
+</html>

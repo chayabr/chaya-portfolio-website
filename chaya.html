@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Chaya B R — Portfolio (Particles)</title>
+
+  <!-- Google font -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg-dark:#020617;
+      --glass: rgba(10,18,30,0.45);
+      --glass-strong: rgba(10,18,30,0.7);
+      --accent: #00d0ff;
+      --accent-2:#38b6ff;
+      --muted: #bcdffb;
+      --card-radius: 14px;
+      --card-pad: 22px;
+    }
+
+    /* Reset */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg-dark);
+      color: #e9f6ff;
+      overflow-x: hidden;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* Canvas background fills whole screen */
+    #bg-canvas{
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+      display:block;
+    }
+
+    /* subtle overlay to darken background slightly */
+    .overlay{
+      position: fixed; inset:0; z-index:1;
+      background: linear-gradient(180deg, rgba(0,0,0,0.2), rgba(0,0,0,0.5));
+      pointer-events: none;
+    }
+
+    /* Page container */
+    .wrap{
+      position: relative;
+      z-index: 2;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:40px 20px 80px;
+    }
+
+    header{
+      width:100%;
+      max-width:1100px;
+      backdrop-filter: blur(6px) saturate(120%);
+      background: linear-gradient(180deg, rgba(8,14,24,0.35), rgba(8,14,24,0.25));
+      border: 1px solid rgba(60,200,255,0.06);
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6), 0 0 30px rgba(0,160,255,0.03) inset;
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      gap:8px;
+      margin-bottom:28px;
+    }
+
+    header h1{
+      color: white;
+      font-size: clamp(1.6rem, 2.8vw, 2.6rem);
+      letter-spacing: -0.6px;
+    }
+
+    header p{
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .links a{
+      margin: 0 8px;
+      color: var(--accent);
+      font-weight:600;
+      text-decoration: none;
+    }
+
+    /* Main grid */
+    .main{
+      width:100%;
+      max-width:1100px;
+      display:grid;
+      grid-template-columns: 1fr 360px;
+      gap: 24px;
+      align-items:start;
+    }
+
+    /* Left column content: sections */
+    .content{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    section.card{
+      background: linear-gradient(180deg, rgba(6,10,16,0.6), rgba(6,10,16,0.55));
+      border-radius: var(--card-radius);
+      padding: var(--card-pad);
+      border: 1px solid rgba(60,200,255,0.06);
+      box-shadow: 0 12px 30px rgba(0,0,0,0.6);
+      transform: translateY(12px);
+      opacity:0;
+      transition: transform .6s cubic-bezier(.2,.9,.25,1), opacity .6s ease;
+    }
+
+    section.card.show {
+      transform: translateY(0);
+      opacity:1;
+    }
+
+    section.card h2{
+      color: var(--accent);
+      margin-bottom:10px;
+      font-size:1.05rem;
+    }
+
+    section.card p, section.card li{
+      color: #dff6ff;
+      line-height:1.55;
+      font-size:0.95rem;
+    }
+
+    .skills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:8px;
+    }
+
+    .chip{
+      background: linear-gradient(90deg, rgba(0,208,255,0.12), rgba(56,182,255,0.06));
+      color:var(--accent-2);
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(64,220,255,0.08);
+      font-weight:600;
+      font-size:0.86rem;
+      box-shadow: 0 6px 18px rgba(0,120,160,0.02);
+    }
+
+    /* Right column: profile card */
+    .profile{
+      position:relative;
+      top:0;
+    }
+
+    .profile .card{
+      background: linear-gradient(180deg, rgba(6,12,20,0.75), rgba(6,12,20,0.65));
+      border-radius: 16px;
+      padding: 20px;
+      text-align:center;
+      border: 1px solid rgba(0,220,255,0.06);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+    }
+
+    .avatar{
+      width:110px;height:110px;border-radius:12px;
+      margin:0 auto 12px;
+      background: linear-gradient(180deg,#053852,#0bb7ff);
+      display:grid;place-items:center;
+      font-weight:800;
+      color:rgba(255,255,255,0.95);
+      font-size:2.4rem;
+      box-shadow: 0 8px 30px rgba(0,160,255,0.12);
+    }
+
+    .profile h3{margin:6px 0 4px;color:#fff}
+    .profile p{color:var(--muted);font-size:0.95rem;margin-bottom:10px}
+
+    .socials{
+      display:flex;gap:10px;justify-content:center;margin-top:10px;
+    }
+    .socials a{
+      display:inline-block;padding:8px 12px;border-radius:10px;
+      background: linear-gradient(90deg, rgba(0,208,255,0.08), rgba(56,182,255,0.05));
+      color:var(--accent); font-weight:700; text-decoration:none;
+      border:1px solid rgba(0,208,255,0.06);
+      transition: transform .18s ease;
+    }
+    .socials a:hover{transform: translateY(-6px) rotate(-2deg) scale(1.03)}
+
+    /* Projects list style */
+    .projects-list a.project-btn{
+      display:block;
+      margin:10px 0;
+      padding:12px 14px;
+      border-radius:12px;
+      background: linear-gradient(90deg, rgba(0,208,255,0.06), rgba(56,182,255,0.03));
+      color: #cff9ff;
+      border:1px solid rgba(0,208,255,0.06);
+      text-decoration:none;
+      font-weight:600;
+      transition: transform .18s, box-shadow .18s;
+    }
+    .projects-list a.project-btn:hover{
+      transform: translateY(-6px);
+      box-shadow: 0 18px 40px rgba(0,160,255,0.07);
+    }
+
+    /* Floating action / sticky bottom */
+    .cta {
+      position: fixed;
+      right: 22px;
+      bottom: 22px;
+      z-index: 3;
+      background: linear-gradient(90deg,var(--accent),var(--accent-2));
+      color: #022229;
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-weight:700;
+      box-shadow: 0 10px 30px rgba(0,176,255,0.18);
+      border: 1px solid rgba(255,255,255,0.06);
+      cursor:pointer;
+    }
+    .cta:hover{transform: translateY(-4px);}
+
+    /* Modal popup */
+    .modal{
+      position: fixed; inset:0; display:flex; align-items:center; justify-content:center;
+      z-index: 8; background: rgba(2,6,12,0.6); opacity:0; pointer-events:none;
+      transition: opacity .2s ease;
+    }
+    .modal.show{opacity:1; pointer-events:auto}
+    .modal .modal-card{
+      width: min(760px,95%); border-radius:12px; padding:18px; background: linear-gradient(180deg, rgba(6,10,16,0.95), rgba(6,10,16,0.98));
+      border:1px solid rgba(80,200,255,0.06); box-shadow: 0 22px 60px rgba(0,0,0,0.7);
+    }
+    .modal .close{
+      float:right; cursor:pointer; color:var(--muted); font-weight:800; font-size:18px;
+      border: none; background:transparent;
+    }
+
+    footer{
+      max-width:1100px;width:100%; margin-top:28px; text-align:center; color:var(--muted);
+      font-size:0.95rem;
+    }
+
+    /* small screens */
+    @media (max-width:920px){
+      .main{grid-template-columns: 1fr}
+      .profile{order:-1}
+    }
+
+  </style>
+</head>
+<body>
+  <!-- Canvas for particles -->
+  <canvas id="bg-canvas"></canvas>
+  <div class="overlay"></div>
+
+  <div class="wrap">
+    <header>
+      <h1>Chaya B R</h1>
+      <p>Motivated Software Engineer • Java Full Stack • Web Developer</p>
+      <div class="links">
+        <a href="mailto:chayabr62@gmail.com">chayabr62@gmail.com</a> · <span>+91 74110 76534</span>
+        <div style="margin-top:8px">
+          <a href="https://github.com/chayabr" target="_blank">GitHub</a> ·
+          <a href="https://www.linkedin.com/in/chaya-b-r-578877353/" target="_blank">LinkedIn</a> ·
+          <a href="https://www.hackerrank.com/profile/chayabr62" target="_blank">HackerRank</a>
+        </div>
+      </div>
+    </header>
+
+    <main class="main" id="main">
+      <div class="content">
+        <section class="card reveal">
+          <h2>Career Objective</h2>
+          <p>Motivated and fast-learning software engineer with strong foundation in Java, web development, and database technologies. Completed a Java Full Stack internship and built real-world projects. Eager to contribute to challenging software engineering roles.</p>
+        </section>
+
+        <section class="card reveal">
+          <h2>Education</h2>
+          <ul>
+            <li><b>B.E – Information Science & Engineering</b>, Adichunchanagiri Institute of Technology, VTU (2021–2025)</li>
+            <li><b>PUC (PCMB)</b>, Junior College Sagara (2019–2021)</li>
+            <li><b>SSLC</b>, Baikodu High School (2017–2019)</li>
+          </ul>
+        </section>
+
+        <section class="card reveal">
+          <h2>Technical Skills</h2>
+          <div class="skills">
+            <span class="chip">Java</span>
+            <span class="chip">OOP</span>
+            <span class="chip">Collections</span>
+            <span class="chip">Multithreading</span>
+            <span class="chip">Spring Boot</span>
+            <span class="chip">Hibernate</span>
+            <span class="chip">MySQL</span>
+            <span class="chip">HTML/CSS/JS</span>
+            <span class="chip">REST APIs</span>
+            <span class="chip">Git / Postman</span>
+          </div>
+        </section>
+
+        <section class="card reveal">
+          <h2>Internship</h2>
+          <p><b>Java Full Stack Developer Intern</b> — Palle Technologies (Jan 2025)</p>
+          <ul>
+            <li>Worked on internal projects using Spring, Hibernate, and MySQL.</li>
+            <li>Built backend logic, APIs, and JSP/Servlet UI components.</li>
+            <li>Tested and validated APIs using Postman; tracked versions in Git.</li>
+          </ul>
+        </section>
+
+        <section class="card reveal projects-list">
+          <h2>Projects</h2>
+          <p><b>Multi-Module Web Application for Student & Organization Management</b> (Jun–Jul 2025)</p>
+          <a href="#" class="project-btn" data-title="Spring Boot Product Module" data-desc="Spring Boot project on product module — CRUD operations, REST APIs, Hibernate integration. GitHub: github.com/chayabr/Spring-Boot-project-on-product-module">Open Project: Spring Boot Product Module</a>
+          <a href="#" class="project-btn" data-title="JEE Project" data-desc="JEE-based project with Servlets and JSP pages for student management. GitHub: github.com/chayabr/JEE-project">Open Project: JEE Project</a>
+          <a href="#" class="project-btn" data-title="Simple Java Maven App" data-desc="Small Java Maven application demonstrating core java concepts and build pipeline. GitHub: github.com/chayabr/simple-java-maven-app">Open Project: Simple Java Maven App</a>
+        </section>
+
+      </div>
+
+      <aside class="profile">
+        <div class="card">
+          <div class="avatar">CB</div>
+          <h3>Chaya B R</h3>
+          <p>Java Full Stack | Web Developer</p>
+
+          <div style="display:flex;gap:8px;justify-content:center;margin-top:8px">
+            <div style="text-align:center">
+              <div style="font-weight:800;color:var(--accent)">2025</div>
+              <div style="color:var(--muted);font-size:0.85rem">Graduated</div>
+            </div>
+            <div style="text-align:center;margin-left:12px">
+              <div style="font-weight:800;color:var(--accent)">6 mo</div>
+              <div style="color:var(--muted);font-size:0.85rem">Internship</div>
+            </div>
+          </div>
+
+          <div class="socials" style="margin-top:14px">
+            <a href="https://github.com/chayabr" target="_blank">GitHub</a>
+            <a href="https://www.linkedin.com/in/chaya-b-r-578877353/" target="_blank">LinkedIn</a>
+            <a href="mailto:chayabr62@gmail.com">Email</a>
+          </div>
+        </div>
+      </aside>
+    </main>
+
+    <footer>© 2025 Chaya B R · Designed by Love</footer>
+  </div>
+
+  <!-- CTA: view resume / quick contact -->
+  <button class="cta" id="contactBtn">Contact</button>
+
+  <!-- Modal -->
+  <div class="modal" id="modal">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <button class="close" id="modalClose">&times;</button>
+      <h3 id="modalTitle" style="color:var(--accent)"></h3>
+      <p id="modalDesc" style="color:#dff6ff; margin-top:10px"></p>
+      <p style="margin-top:12px;color:var(--muted)">Open repo link in a new tab from description (copy-paste).</p>
+    </div>
+  </div>
+
+  <script>
+    /* ---------- PARTICLE BACKGROUND ---------- */
+    const canvas = document.getElementById('bg-canvas');
+    const ctx = canvas.getContext('2d', { alpha: true });
+    let w = canvas.width = innerWidth;
+    let h = canvas.height = innerHeight;
+    const DPR = Math.max(1, window.devicePixelRatio || 1);
+    canvas.width = w * DPR; canvas.height = h * DPR; canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+    ctx.scale(DPR, DPR);
+
+    const cfg = {
+      particleCount: Math.max(60, Math.floor((w*h)/12000)), // adapts to screen
+      maxRadius: 2.6,
+      speed: 0.35,
+      linkDistance: 120,
+      colors: ['#00d0ff', '#33c7ff', '#8fe6ff']
+    };
+
+    class Particle {
+      constructor(){
+        this.reset();
+      }
+      reset(){
+        this.x = Math.random()*w;
+        this.y = Math.random()*h;
+        const angle = Math.random()*Math.PI*2;
+        const speed = cfg.speed * (0.4 + Math.random()*1.2);
+        this.vx = Math.cos(angle)*speed;
+        this.vy = Math.sin(angle)*speed;
+        this.r = Math.random()*cfg.maxRadius + 0.6;
+        this.color = cfg.colors[Math.floor(Math.random()*cfg.colors.length)];
+        this.alpha = 0.3 + Math.random()*0.7;
+      }
+      move(){
+        this.x += this.vx;
+        this.y += this.vy;
+        if(this.x < -20 || this.x > w+20 || this.y < -20 || this.y > h+20){
+          // wrap-around
+          if(Math.random() > 0.5) this.reset();
+          else {
+            if(this.x < -20) this.x = w + 10;
+            if(this.x > w+20) this.x = -10;
+            if(this.y < -20) this.y = h + 10;
+            if(this.y > h+20) this.y = -10;
+          }
+        }
+      }
+      draw(){
+        ctx.beginPath();
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.alpha;
+        ctx.arc(this.x, this.y, this.r, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+
+    let particles = [];
+    function initParticles(){
+      w = canvas.width = innerWidth;
+      h = canvas.height = innerHeight;
+      canvas.width = w * DPR; canvas.height = h * DPR;
+      canvas.style.width = w + 'px'; canvas.style.height = h + 'px';
+      ctx.scale(DPR, DPR);
+      particles = [];
+      for(let i=0;i<cfg.particleCount;i++) particles.push(new Particle());
+    }
+
+    function connectParticles(){
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const a = particles[i], b = particles[j];
+          const dx = a.x - b.x, dy = a.y - b.y;
+          const dist = Math.sqrt(dx*dx + dy*dy);
+          if(dist < cfg.linkDistance){
+            const t = 1 - dist / cfg.linkDistance;
+            ctx.beginPath();
+            ctx.strokeStyle = a.color;
+            ctx.globalAlpha = 0.12 * t;
+            ctx.lineWidth = 1 * t;
+            ctx.moveTo(a.x, a.y);
+            ctx.lineTo(b.x, b.y);
+            ctx.stroke();
+          }
+        }
+      }
+    }
+
+    let last = 0;
+    function animate(time){
+      const dt = time - last; last = time;
+      ctx.clearRect(0,0,w,h);
+      // subtle radial background glow
+      const grad = ctx.createLinearGradient(0,0,w,h);
+      grad.addColorStop(0,'rgba(0,18,30,0.05)');
+      grad.addColorStop(1,'rgba(0,0,0,0.05)');
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,w,h);
+
+      for(const p of particles){ p.move(); p.draw(); }
+      connectParticles();
+      requestAnimationFrame(animate);
+    }
+
+    // mouse interactivity (repel + spawn)
+    const mouse = {x: -9999, y: -9999, down:false};
+    window.addEventListener('mousemove', e => { mouse.x = e.clientX; mouse.y = e.clientY; });
+    window.addEventListener('mouseleave', ()=>{ mouse.x = -9999; mouse.y = -9999; });
+    window.addEventListener('resize', ()=> {
+      // recompute sizes and reinit
+      initParticles();
+    });
+
+    // Slight attraction/repel effect toward mouse
+    function particleInteractionLoop(){
+      for(const p of particles){
+        const dx = p.x - mouse.x; const dy = p.y - mouse.y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if(dist < 120){
+          const force = (120 - dist) * 0.0025;
+          p.vx += (dx/dist) * force;
+          p.vy += (dy/dist) * force;
+        }
+        // tiny velocity damping
+        p.vx *= 0.995; p.vy *= 0.995;
+      }
+      setTimeout(particleInteractionLoop, 40);
+    }
+
+    initParticles();
+    requestAnimationFrame(animate);
+    particleInteractionLoop();
+
+    /* ---------- SCROLL REVEAL (IntersectionObserver) ---------- */
+    const reveals = document.querySelectorAll('.reveal');
+    const obs = new IntersectionObserver((entries)=>{
+      entries.forEach(entry=>{
+        if(entry.isIntersecting) entry.target.classList.add('show');
+      });
+    }, {threshold:0.18});
+    reveals.forEach(r=>obs.observe(r));
+
+    /* ---------- PROJECT MODAL LOGIC ---------- */
+    const modal = document.getElementById('modal');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDesc = document.getElementById('modalDesc');
+    const modalClose = document.getElementById('modalClose');
+
+    document.querySelectorAll('.project-btn').forEach(btn=>{
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const title = btn.dataset.title || 'Project';
+        const desc = btn.dataset.desc || 'No description';
+        modalTitle.textContent = title;
+        modalDesc.textContent = desc;
+        modal.classList.add('show');
+      });
+    });
+
+    modalClose.addEventListener('click', ()=> modal.classList.remove('show'));
+    modal.addEventListener('click', (e)=> { if(e.target === modal) modal.classList.remove('show'); });
+
+    /* ---------- CONTACT CTA ---------- */
+    document.getElementById('contactBtn').addEventListener('click', ()=>{
+      const subject = encodeURIComponent('Portfolio Contact from Website');
+      const body = encodeURIComponent('Hi Chaya, I saw your portfolio and I would like to connect regarding ...');
+      window.location.href = `mailto:chayabr62@gmail.com?subject=${subject}&body=${body}`;
+    });
+
+    /* Small accessibility: keyboard ESC closes modal */
+    window.addEventListener('keydown', (e)=> { if(e.key === 'Escape') modal.classList.remove('show'); });
+
+  </script>
+</body>
+</html>

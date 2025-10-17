@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chaya B R - Portfolio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    /* ===== Global Styles ===== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: url('https://images.unsplash.com/photo-1537432376769-00a93c6e10e2?auto=format&fit=crop&w=1600&q=80') no-repeat center center fixed;
+      background-size: cover;
+      color: #fff;
+      line-height: 1.6;
+    }
+
+    /* Overlay for better readability */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      z-index: -1;
+    }
+
+    a {
+      text-decoration: none;
+      font-weight: 600;
+      background: linear-gradient(90deg, #ff6a95, #ffd06a);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      transition: all 0.3s ease;
+    }
+
+    a:hover {
+      transform: scale(1.1);
+    }
+
+    .container {
+      width: 90%;
+      max-width: 1100px;
+      margin: auto;
+      padding: 20px 0;
+    }
+
+    h1, h2, h3 {
+      color: #fff;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    h2 {
+      margin-top: 30px;
+      margin-bottom: 15px;
+      padding-bottom: 5px;
+      display: inline-block;
+      border-bottom: 3px solid #fff;
+    }
+
+    /* ===== Header ===== */
+    header {
+      text-align: center;
+      padding: 50px 20px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 0 0 30px 30px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    }
+
+    header p {
+      font-size: 1.2rem;
+      margin: 8px 0;
+      color: #fffde7;
+    }
+
+    .social-links a {
+      margin: 0 12px;
+      font-size: 1.2rem;
+    }
+
+    /* ===== Section Styles ===== */
+    section {
+      padding: 30px 0;
+    }
+
+    .section-content {
+      background: rgba(0,0,0,0.75);
+      padding: 25px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+      margin-bottom: 25px;
+      transition: transform 0.3s;
+    }
+
+    .section-content:hover {
+      transform: translateY(-5px);
+    }
+
+    /* ===== Skills ===== */
+    .skills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+
+    .skill {
+      background: linear-gradient(135deg, #ff6a95, #ffd06a);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 30px;
+      font-weight: 600;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+      transition: transform 0.3s;
+    }
+
+    .skill:hover {
+      transform: scale(1.1);
+    }
+
+    /* ===== Projects ===== */
+    .projects ul {
+      list-style-type: none;
+    }
+
+    .projects li {
+      margin-bottom: 15px;
+      padding-left: 25px;
+      position: relative;
+    }
+
+    .projects li::before {
+      content: "✨";
+      position: absolute;
+      left: 0;
+    }
+
+    /* ===== Footer ===== */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.7);
+      color: #fff;
+      margin-top: 30px;
+      border-radius: 30px 30px 0 0;
+    }
+
+    /* ===== Responsive ===== */
+    @media(max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
+      .skills {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <h1>Chaya B R</h1>
+    <p>Motivated Software Engineer | Java Full Stack Developer | Web Developer</p>
+    <div class="social-links">
+      <a href="https://github.com/chayabr" target="_blank">GitHub</a> |
+      <a href="https://www.linkedin.com/in/chaya-b-r-578877353/" target="_blank">LinkedIn</a> |
+      <a href="https://www.hackerrank.com/profile/chayabr62" target="_blank">HackerRank</a> |
+      <a href="https://www.youtube.com/@chayabr5926" target="_blank">YouTube</a>
+    </div>
+  </header>
+
+  <div class="container">
+    
+    <!-- Career Objective -->
+    <section>
+      <h2>Career Objective</h2>
+      <div class="section-content">
+        Motivated and fast-learning software engineer with strong foundation in Java, web development,
+        and database technologies. Completed a Java Full Stack internship and developed real-world
+        projects. Adept at picking up new technologies quickly and delivering efficient solutions.
+        Eager to contribute to challenging software engineering roles.
+      </div>
+    </section>
+
+    <!-- Education -->
+    <section>
+      <h2>Education</h2>
+      <div class="section-content">
+        <ul>
+          <li><strong>B.E – Information Science & Engineering</strong>, Adichunchanagiri Institute of Technology, VTU, Chikkamagaluru (2021–2025)</li>
+          <li><strong>PUC (PCMB)</strong>, Junior College Sagara (2019–2021)</li>
+          <li><strong>SSLC</strong>, Baikodu High School (2017–2019)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Technical Skills -->
+    <section>
+      <h2>Technical Skills</h2>
+      <div class="section-content skills">
+        <div class="skill">Java</div>
+        <div class="skill">OOP</div>
+        <div class="skill">Collections</div>
+        <div class="skill">Multithreading</div>
+        <div class="skill">HTML</div>
+        <div class="skill">CSS</div>
+        <div class="skill">Spring Boot</div>
+        <div class="skill">Hibernate</div>
+        <div class="skill">MySQL</div>
+        <div class="skill">JSON</div>
+        <div class="skill">REST APIs</div>
+        <div class="skill">Git</div>
+        <div class="skill">Eclipse</div>
+        <div class="skill">Postman</div>
+      </div>
+    </section>
+
+    <!-- Internship Experience -->
+    <section>
+      <h2>Internship Experience</h2>
+      <div class="section-content">
+        <strong>Java Full Stack Developer Intern – Palle Technologies (Jan 2025)</strong>
+        <ul>
+          <li>Worked on internal Java Full Stack projects involving Spring, Hibernate, and MySQL.</li>
+          <li>Developed backend logic and user interfaces using JSP/Servlets and Java frameworks.</li>
+          <li>Gained hands-on experience in debugging and software development lifecycle.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section>
+      <h2>Projects</h2>
+      <div class="section-content projects">
+        <ul>
+          <li><strong>Multi-Module Web Application for Student and Organization Management</strong> (Jun 2025 – Jul 2025)
+            <ul>
+              <li>Developed multi-functional web application combining student data management, interview scheduling, and training result handling.</li>
+              <li>Integrated Java, JDBC, Servlet, Spring Boot, Hibernate, and MySQL for backend and CRUD operations.</li>
+              <li>Frontend using HTML, CSS, JavaScript; tested REST APIs using Postman.</li>
+              <li>Project Links: 
+                <a href="https://github.com/chayabr/Spring-Boot-project-on-product-module" target="_blank">GitHub 1</a>, 
+                <a href="https://github.com/chayabr/JEE-project" target="_blank">GitHub 2</a>, 
+                <a href="https://github.com/chayabr/simple-java-maven-app" target="_blank">GitHub 3</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Certifications -->
+    <section>
+      <h2>Certifications</h2>
+      <div class="section-content">
+        <ul>
+          <li>Certified Intern at Palle Technologies Pvt. Ltd</li>
+          <li>Certified Java Programming Course by Great Learning</li>
+          <li>Coordinator for DigitISE</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Extra-curricular Activities -->
+    <section>
+      <h2>Extra-Curricular Activities</h2>
+      <div class="section-content">
+        <ul>
+          <li>Participated in a state-level hackathon at PES Shivmogga (Anvesana), collaborating with startup companies.</li>
+          <li>Organized hackathons & CSS Battle sessions for 10+ students on Web Development topics.</li>
+        </ul>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Chaya B R | All Rights Reserved
+  </footer>
+
+</body>
+</html>
