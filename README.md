@@ -26,13 +26,7 @@ This portfolio is designed to showcase my **skills, projects, and achievements**
 
 ---
 
-## 📸 Preview
 
-![Portfolio Preview](assets/preview.png)
-
-*(Replace this with a screenshot of your live website once deployed)*
-
----
 
 ## 🌐 Live Demo
 
